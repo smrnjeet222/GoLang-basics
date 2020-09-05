@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"reflect"
 	"runtime"
 	"strconv"
@@ -60,14 +61,15 @@ const (
 
 func main() {
 	// enumerated constansts (iota)
-	fmt.Printf("%v\n", ia)
-	fmt.Printf("%v\n", ib)
-	fmt.Printf("%v\n", ic)
+	fmt.Printf("%v ", ia)
+	fmt.Printf("%v ", ib)
+	fmt.Printf("%v \n", ic)
+	fmt.Println("..... ॐ  .....")
 
 	// variables --------------------
 	// block scope only
 	var i float64 = 65.6
-	fmt.Println("Hello, ॐ ,", i)
+	fmt.Println("Hello,", i)
 
 	j := 84
 	fmt.Printf("\nj = %v -> %T", j, j)
@@ -93,10 +95,12 @@ func main() {
 	// Constants cannot be declared using the := syntax.
 	const w, q int = 1, 2
 
-	const c, python, java = true, false, "no!"
+	const c, python, java = true, false, "no!\n"
 	fmt.Println(w, q, c, python, java)
 
 	// Conditionals -----------
+	fmt.Println("LOOPS")
+
 	sum := 1
 	for i := 0; i < 10; i++ {
 		sum += sum
@@ -105,10 +109,42 @@ func main() {
 		fmt.Println(sum)
 	}
 
+	for i, j := 0, 0; i < 3; i, j = i+1, j+2 {
+		fmt.Println(i, j)
+	}
+	iloop := 0
+	for iloop < 5 {
+		fmt.Print(iloop)
+		iloop++
+	}
+	fmt.Println("")
+
+	s := []int{3, 2, 1, 0}
+	for k, v := range s {
+		fmt.Println(k, v)
+	}
+
+Loop: //label for break
+	for i := 1; i <= 2; i++ {
+		for j := 1; j <= 2; j++ {
+			fmt.Print(i * j)
+			if i*j >= 10 {
+				break Loop //break tag used here
+			}
+		}
+		fmt.Println("")
+	}
+
+	myNum := 0.41421
+	if math.Abs(myNum/math.Pow(math.Sqrt(myNum), 2)-1) < 0.00001 {
+		fmt.Println("\nThese are same no.")
+	}
+
 	fmt.Println(sqrt(2))
 
-	fmt.Println("Go runs on ")
-	switch os := runtime.GOOS; os {
+	fmt.Println("\nGo runs on switches ")
+	// initializers switch
+	switch os := runtime.GOOS; os { //break by default
 	case "darwin":
 		fmt.Println("OS X.")
 	case "linux":
@@ -131,8 +167,9 @@ func main() {
 	}
 
 	t := time.Now()
-	switch {
-	case t.Hour() < 12:
+	fmt.Println(t)
+	switch { //tagless -> like if, if else, else
+	case t.Hour() < 12 && t.Hour() > 4:
 		fmt.Println("Good morning!")
 	case t.Hour() < 17:
 		fmt.Println("Good afternoon.")
@@ -140,24 +177,36 @@ func main() {
 		fmt.Println("Good evening.")
 	}
 
+	var itrf interface{} = 1.
+	switch itrf.(type) {
+	case int:
+		fmt.Println("itrf is a int")
+	case float64:
+		fmt.Println("itrf is a float64")
+	case string:
+		fmt.Println("itrf is a string")
+	default:
+		fmt.Println("itrf is a another type")
+	}
+
+	// byte conv
 	bytestr := "ABCDEF"
 	bconv := []byte(bytestr)
-	fmt.Printf("Stored as bytes %v -> %T\n", bconv, bconv)
+	fmt.Printf("\nStored as bytes %v -> %T\n", bconv, bconv)
 
-	fmt.Println("counting")
-
-	// for i := 0; i < 10; i++ {
-	// 	defer fmt.Print(i) // at last / reverse
-	// }
-
-	fmt.Println("done")
+	// at last / reverse
+	defer fmt.Println("\nDone")
+	for i := 0; i < 10; i++ {
+		defer fmt.Print(i)
+	}
+	defer fmt.Println("\nCounting")
 
 	// primitives
 
 	nbool := 1 == 1
 	mbool := 1 == 2
 
-	fmt.Printf("%v, %T\n", nbool, nbool)
+	fmt.Printf("\n%v, %T\n", nbool, nbool)
 	fmt.Printf("%v, %T\n", mbool, mbool)
 
 	bita := 10                // 1010
@@ -182,7 +231,7 @@ func main() {
 	// Arrays & Slices
 
 	arr := [...]int{1, 2, 3, 4, 5}
-	fmt.Printf("\nARRAY: %v\n", arr)
+	fmt.Printf("\n\nARRAY: %v\n", arr)
 
 	var stud [3]string
 	stud[0] = "Simranjeet"
@@ -203,29 +252,29 @@ func main() {
 	arrs := []int{8, 7, 6, 5, 4, 3, 2, 1, 0}
 	barrs := arrs //slice naturally use refernces
 	barrs[0] = 0
-	fmt.Printf("SliceArr: %v\n", arrs)
+	fmt.Printf("\nSliceArr: %v\n", arrs)
 	fmt.Printf("len of sliceArr: %v\n", len(arrs))
 	fmt.Printf("Capacity of sliceArr: %v\n", cap(arrs))
 
 	sa := arrs[3:7]
 	fmt.Println(sa)
-	fmt.Printf("len of sa: %v\n", len(sa))
+	fmt.Printf("\nlen of sa: %v\n", len(sa))
 	fmt.Printf("Capacity of sa: %v\n", cap(sa))
 
 	// built in make fn
 	mkarr := make([]int, 3, 3) //initialized to 0, len 3, cap 3
 	fmt.Println(mkarr)
-	fmt.Printf("len of mkarr: %v\n", len(mkarr))
+	fmt.Printf("\nlen of mkarr: %v\n", len(mkarr))
 	fmt.Printf("Capacity of mkarr: %v\n", cap(mkarr))
 
 	mkarr = append(mkarr, 4, 5, 6, 7) //cap is doubled
 	fmt.Println(mkarr)
-	fmt.Printf("len of mkarr: %v\n", len(mkarr))
+	fmt.Printf("\nlen of mkarr: %v\n", len(mkarr))
 	fmt.Printf("Capacity of mkarr: %v\n", cap(mkarr))
 
 	mkarr = append(mkarr, sa...) // add slice using spread op
 	fmt.Println(mkarr)
-	fmt.Printf("len of mkarr: %v\n", len(mkarr))
+	fmt.Printf("\nlen of mkarr: %v\n", len(mkarr))
 	fmt.Printf("Capacity of mkarr: %v\n", cap(mkarr))
 
 	mkarr = mkarr[:len(mkarr)-1] // pop
@@ -249,7 +298,7 @@ func main() {
 	// fmt.Printf("Pop of Goa: %v\n", statePop["Goa"]) //for no key return 0
 
 	if popGoa, ok := statePop["Goa"]; ok {
-		fmt.Printf("Pop of Goa: %v Is Key:%v\n", popGoa, ok)
+		fmt.Printf("\nPop of Goa: %v Is Key:%v\n\n", popGoa, ok)
 	} // ok is false if key not present
 
 	//  Struct  (strict are vaue types & copy is passed like arrays)
