@@ -1,4 +1,4 @@
-package main
+package req
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 )
 
 // Req is Request ....
-func main() {
+func Req() {
 	res, err := http.Get("http://www.google.com/robots.txt")
 	if err != nil {
 		log.Fatal(err)

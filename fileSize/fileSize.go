@@ -1,4 +1,4 @@
-package main
+package fileSize
 
 import (
 	"fmt"
@@ -17,7 +17,7 @@ const (
 )
 
 // ConvFileSize for File conversion
-func main() {
+func ConvFileSize() {
 	fileSize := 540000000000.
 	fmt.Printf("%.3f GB", fileSize/gb)
 }

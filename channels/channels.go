@@ -1,4 +1,4 @@
-package main
+package channels
 
 import (
 	"fmt"
@@ -7,7 +7,8 @@ import (
 
 var wg = sync.WaitGroup{}
 
-func main() {
+// channels and gorutines
+func Channel() {
 	ch := make(chan int, 50) //buffer 50
 	wg.Add(2)
 	go func(ch <-chan int) { //recieve only channel

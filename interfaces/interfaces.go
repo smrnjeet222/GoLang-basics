@@ -1,4 +1,4 @@
-package main
+package interfaces
 
 import (
 	"fmt"
@@ -43,7 +43,7 @@ func measure(g geometry) {
 }
 
 // Intrfaces for calc area/perm
-func main() {
+func Interfaces() {
 
 	r := rect{width: 5, height: 10}
 	c := circle{radius: 5}

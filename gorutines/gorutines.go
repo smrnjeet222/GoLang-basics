@@ -1,4 +1,4 @@
-package main
+package gorutines
 
 import (
 	"fmt"
@@ -10,7 +10,8 @@ var wg = sync.WaitGroup{}
 var counter = 0
 var m = sync.RWMutex{}
 
-func main() {
+// Gorutines is.....
+func Gorutine() {
 	runtime.GOMAXPROCS(10)
 	var msg = "Hello Go!"
 	wg.Add(1)
