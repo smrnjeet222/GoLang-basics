@@ -19,16 +19,34 @@ var (
 	Number int = 99
 )
 
-func swap(x, y string) (string, string) {
-	return y, x
-}
-
-func sqrt(x float64) float64 {
+func sqrt(x float64) (float64, error) { // error as second arg
+	if x < 0.0 {
+		return 0.0, fmt.Errorf("can't root neg nos")
+	}
 	sq := 1.0
 	for i := 0; i < 10; i++ {
 		sq -= (sq*sq - x) / (2 * sq)
 	}
-	return sq
+	return sq, nil
+}
+
+func swap(x, y *string) (*string, *string) {
+	*x += "*"
+	*y += "+"
+	return y, x
+}
+
+func sumint(values ...int) (rslt int) { //like *args  & default return
+	fmt.Println(values)
+	// rslt := 0
+	for _, v := range values {
+		rslt += v
+	}
+	return
+}
+
+func (anm Animal) roar() {
+	fmt.Println(anm.Name, "Roaaaaaaar")
 }
 
 // Struct
@@ -89,9 +107,6 @@ func main() {
 
 	fmt.Printf("\n\n%v -> %T\n", fname, fname)
 
-	var a, b string = swap("hello", "world")
-	fmt.Println(a, b)
-
 	// Constants cannot be declared using the := syntax.
 	const w, q int = 1, 2
 
@@ -139,8 +154,6 @@ Loop: //label for break
 	if math.Abs(myNum/math.Pow(math.Sqrt(myNum), 2)-1) < 0.00001 {
 		fmt.Println("\nThese are same no.")
 	}
-
-	fmt.Println(sqrt(2))
 
 	fmt.Println("\nGo runs on switches ")
 	// initializers switch
@@ -194,12 +207,19 @@ Loop: //label for break
 	bconv := []byte(bytestr)
 	fmt.Printf("\nStored as bytes %v -> %T\n", bconv, bconv)
 
-	// at last / reverse
+	// defer/panic/recovery
 	defer fmt.Println("\nDone")
 	for i := 0; i < 10; i++ {
 		defer fmt.Print(i)
 	}
 	defer fmt.Println("\nCounting")
+
+	// num, den := 1, 0
+	// ans := num / den
+	// if den == 0 {
+	// 	panic("Somthing bad") //like try/except
+	// }
+	// fmt.Println(ans)
 
 	// primitives
 
@@ -331,5 +351,68 @@ Loop: //label for break
 	tag := reflect.TypeOf(Animal{})
 	field, _ := tag.FieldByName("Name")
 	fmt.Println(field.Tag)
+
+	//Pointers
+	fmt.Println("\n----Pointers----")
+	// map and slices use pointers under the hood
+
+	var ptra int = 42
+	var ptrb *int = &ptra
+	fmt.Println(ptra, &ptra, ptrb, *ptrb)
+	ptra = 21
+	fmt.Println(ptra, &ptra, ptrb, *ptrb)
+	*ptrb = 10
+	fmt.Println(ptra, &ptra, ptrb, *ptrb)
+
+	ptrarr := [3]int{1, 2, 3}
+	ptrc := &ptrarr[0]
+	ptrd := &ptrarr[1] //cant perform pointer arithmetic
+	fmt.Printf("\n%v %p %p\n", ptrarr, ptrc, ptrd)
+
+	var anm *Animal
+	fmt.Println(anm) // nil i.e not initialized
+	anm = new(Animal)
+	(*anm).Name = "Emu" // anm.Name will also work
+	fmt.Println(*anm)
+
+	//functions
+	fmt.Println("")
+	sqr, err := sqrt(25.125)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(sqr)
+	}
+
+	defsum := sumint(1, 2, 3, 4, 5, 6)
+	fmt.Println("The sum is ", defsum)
+
+	s1 := "hello"
+	s2 := "world"
+	var a, b *string = swap(&s1, &s2)
+	fmt.Println(*a, *b)
+	fmt.Println(s1, s2)
+
+	// anonymous fn
+	func(i int) {
+		a := "\nHi" //local scope
+		fmt.Println(a, "I'm Anonymous,", i)
+	}(1)
+
+	var f func() = func() {
+		fmt.Println("I'm Anonymous, 2")
+	}
+	f()
+
+	//methods
+
+	// func(anm Animal) roar() {
+	// 	fmt.Println(anm.Name, "Roaaaaaaar")
+	// }
+	lion := Animal{
+		Name:   "Lion",
+		Origin: "Africa",
+	}
+	lion.roar()
 
 }

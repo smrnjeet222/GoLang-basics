@@ -16,7 +16,8 @@ const (
 	yb
 )
 
-func convFileSize() {
+// ConvFileSize for File conversion
+func ConvFileSize() {
 	fileSize := 540000000000.
 	fmt.Printf("%.3f GB", fileSize/gb)
 }
