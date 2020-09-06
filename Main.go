@@ -190,7 +190,7 @@ Loop: //label for break
 		fmt.Println("Good evening.")
 	}
 
-	var itrf interface{} = 1.
+	var itrf interface{} = 1. //type switch
 	switch itrf.(type) {
 	case int:
 		fmt.Println("itrf is a int")
@@ -377,7 +377,7 @@ Loop: //label for break
 
 	//functions
 	fmt.Println("")
-	sqr, err := sqrt(25.125)
+	sqr, err := sqrt(-25.125)
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -415,4 +415,23 @@ Loop: //label for break
 	}
 	lion.roar()
 
+	// interfaces
+	var wi Writer = ConsoleWriter{}
+	wi.Write([]byte("\nHello Go!"))
+
+}
+
+// interfaces
+
+// Writer interface
+type Writer interface {
+	Write([]byte) (int, error)
+}
+
+// ConsoleWriter struct
+type ConsoleWriter struct{}
+
+func (cw ConsoleWriter) Write(data []byte) (int, error) {
+	n, err := fmt.Println(string(data))
+	return n, err
 }

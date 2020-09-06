@@ -8,7 +8,7 @@ import (
 )
 
 // Req is Request ....
-func Req() {
+func main() {
 	res, err := http.Get("http://www.google.com/robots.txt")
 	if err != nil {
 		log.Fatal(err)
